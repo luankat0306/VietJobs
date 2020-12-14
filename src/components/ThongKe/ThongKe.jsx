@@ -1,13 +1,13 @@
 import { faBriefcase, faChartLine, faLandmark, faUser, faUserCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Component } from 'react'
-import CongViecService from '../services/CongViecService'
-import NguoiTimViecService from '../services/NguoiTimViecService'
-import NhaTuyenDungService from '../services/NhaTuyenDungService'
-import TrangThaiHoSoService from '../services/TrangThaiHoSoService'
+import CongViecService from '../../services/CongViecService'
+import NguoiTimViecService from '../../services/NguoiTimViecService'
+import NhaTuyenDungService from '../../services/NhaTuyenDungService'
+import TrangThaiHoSoService from '../../services/TrangThaiHoSoService'
 import ChartLine from './ChartLine'
 import ChartPie from './ChartPie'
-import Table from './Table'
+import Table from '../Table'
 
 
 export default class ThongKe extends Component {

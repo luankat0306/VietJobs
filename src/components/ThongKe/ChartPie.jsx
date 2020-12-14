@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Pie } from 'react-chartjs-2';
-import TrangThaiHoSoService from '../services/TrangThaiHoSoService';
+import TrangThaiHoSoService from '../../services/TrangThaiHoSoService';
 
 class ChartPie extends Component {
     constructor(props) {

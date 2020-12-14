@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
-import CongViecService from '../services/CongViecService';
+import CongViecService from '../../services/CongViecService';
 
 class ChartLine extends Component {
 	constructor(props) {

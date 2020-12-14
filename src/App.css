@@ -43,7 +43,7 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 50%;
- 
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 .admin-wrapper .left-sidebar .admin .img-Admin a {
   margin-top: 10px;
@@ -199,6 +199,16 @@ body {
   border-radius: 15px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
+/*---------------------------------------------------------Thong Tin---------------------------------------------------*/
+.admin-wrapper .content .thong-tin {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-items: center;
+  margin: 10vh 0px;
+}
+.admin-wrapper .content .thong-tin .img-Admin {
+
+}
 /*--------------------------------Search----------------------------------------------------------------------------*/
 .admin-wrapper .content .search form.form-search {
   position: absolute;
@@ -322,23 +332,23 @@ form.form-search::after {
 }
 
 /*--------------------------------Show Data-------------------------------------------------------------*/
-.admin-wrapper .content .thong-ke .table1{
+.admin-wrapper .content .table1{
   grid-column-start: 3;
   grid-column-end: span 6;
   grid-row-start: 1;
   grid-row-end:  span 2;
 }
-.admin-wrapper .content .thong-ke  .table2{
+.admin-wrapper .content  .table2{
   grid-column-start: 1;
   grid-column-end: span 3;
   grid-row-start: 3;
   grid-row-end: span 4;
 }
-.admin-wrapper .content .thong-ke .show-data {
+.admin-wrapper .content .show-data {
   width: 100%;
   height: 100%;
 }
-.admin-wrapper .content .thong-ke .show-data table {
+.admin-wrapper .content .show-data table {
   width: 100%;
   height: 100%;
   margin-top: 20px;

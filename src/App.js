@@ -5,7 +5,8 @@ import {
 } from "react-router-dom";
 import './App.css';
 import LeftSidebar from './components/LeftSidebar';
-import ThongKe from './components/ThongKe';
+import ThongKe from './components/ThongKe/ThongKe';
+import ThongTin from './components/ThongTin/ThongTin';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
                     </Route>
                     <Route  path="/thong-ke">
                       <ThongKe />
+                    </Route>
+                    <Route  path="/thong-tin">
+                      <ThongTin/>
                     </Route>
                 </Switch>
               </div>
