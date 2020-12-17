@@ -32,7 +32,6 @@ class ChartPie extends Component {
     }
     render() {
         return (
-            console.log("trang thai" + this.state.trangThai),
             <div className="chart-pie">
                 <Pie
                     options = {{

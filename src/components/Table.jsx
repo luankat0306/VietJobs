@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 
 function ListHead (props) {
-    return props.ths.map((th) => <th>{th}</th>)
+    return props.ths.map((th,index) => <th key={index}>{th}</th>)
 }
 
 function Render (props) {
     var data = []
     for (let index = 0; index < props.bodys.length; index++) {
-        data.push(<tr>{
-            Object.values(props.bodys[index]).map((td) => <td>{td}</td>)
+        data.push(<tr key={index}>{
+            Object.values(props.bodys[index]).map((td, index) => <td key={index}>{td}</td>)
         }</tr>)
-            console.log(Object.values(props.bodys[index]).map((td) => td))
     }
     return data;
 }
@@ -23,7 +22,7 @@ class Table extends Component {
 
     render() {
         return (
-                <div class = "show-data">
+                <div className = "show-data">
                     <table>
                         <thead>                      
                                 <tr>

@@ -47,9 +47,9 @@ class ThongTin extends Component {
 
                             <Form.Group as={Col} controlId="formGridState">
                             <Form.Label>State</Form.Label>
-                            <Form.Control as="select" defaultValue="Choose...">
+                            <Form.Control onClick={{}} as="select" defaultValue="Choose...">
                                 <option>Choose...</option>
-                                <option>...</option>
+                                <option >...</option>
                             </Form.Control>
                             </Form.Group>
 

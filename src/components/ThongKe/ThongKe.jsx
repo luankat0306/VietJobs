@@ -92,12 +92,12 @@ export default class ThongKe extends Component {
              
                 <div className="thong-ke">
                     <ChartLine />
-                    <dib className="table1">
+                    <div className="table1">
                         <Table head = {ths} body={this.state.bodyCongTy}/>
-                    </dib>
-                    <dib className="table2">
+                    </div>
+                    <div className="table2">
                         <Table head = {congViec} body={this.state.bodyCongViec}/>
-                    </dib>
+                    </div>
                     <ChartPie/>    
                 </div>
                 <footer style={{
@@ -108,8 +108,7 @@ export default class ThongKe extends Component {
                     color: "gray",
                     textAlign: "center"
                 }}>
-                    <h5>Copyright © VietJobs, Vietnam
-</h5>
+                    <h5>Copyright © VietJobs, Vietnam</h5>
                 </footer>
             </div>
         )
