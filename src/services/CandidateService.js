@@ -1,9 +1,9 @@
 import Axios from "axios"
 
-var API_URL = "http://localhost:8080/api/trang-thai-ho-so"
+var API_URL = "http://localhost:8080/api/candidates"
 
-class TrangThaiHoSoService {
-    countTrangThaiHoSo() {
+class CandidateService {
+    countCandidate() {
         return Axios.get(API_URL + "/count");
     }
 
@@ -20,4 +20,4 @@ class TrangThaiHoSoService {
     }
 }
 
-export default new TrangThaiHoSoService()
+export default new CandidateService()
