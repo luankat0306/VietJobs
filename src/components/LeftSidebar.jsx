@@ -9,7 +9,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import AuthService from "../services/AuthService";
 export default class LeftSidebar extends Component {
+    logout() {
+        AuthService.logout();
+    }
     render() {
         return (
             <div className="left-sidebar">
@@ -20,7 +24,9 @@ export default class LeftSidebar extends Component {
                             src={process.env.PUBLIC_URL + "/images/avatar.png"}
                             alt="avatar"
                         />
-                        <a href="logout.php">Logout</a>
+                        <a href="/login" onClick={this.logout}>
+                            Logout
+                        </a>
                     </div>
 
                     <h5 className="logo">

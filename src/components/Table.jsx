@@ -86,7 +86,7 @@ class Table extends Component {
 
         return (
             <div className="show-data">
-                <table>
+                <table id="table">
                     <thead>
                         <tr
                             style={{

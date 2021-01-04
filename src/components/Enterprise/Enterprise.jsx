@@ -1,7 +1,6 @@
 import { faUserTie } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
-import ApplicantService from "../../services/ApplicantService";
 import SearchBar from "../SearchBar";
 import Table from "../Table";
 import ButtonAdd from "./ButtonAdd";
@@ -9,18 +8,25 @@ import ButtonEdit from "./ButtonEdit";
 import ButtonDelete from "./ButtonDelete";
 import { ToastContainer } from "react-toastify";
 import LeftSidebar from "../LeftSidebar";
+import EnterpriseService from "../../services/EnterpriseService";
 
-class Applicant extends Component {
+class Enterprise extends Component {
     constructor(props) {
         super(props);
         this.state = {
             modalShow: false,
-            thead: ["STT", "Họ và tên", "Số điện thoại", "Email", "Chỉnh Sửa"],
+            thead: [
+                "STT",
+                "Tên công ty",
+                "Số điện thoại",
+                "Email",
+                "Chỉnh Sửa",
+            ],
             tbody: [],
         };
     }
     componentDidMount() {
-        this.getApplicants();
+        this.getEnterprises();
     }
 
     render() {
@@ -36,7 +42,7 @@ class Applicant extends Component {
                             color: "#242849",
                         }}>
                         <FontAwesomeIcon icon={faUserTie} />
-                        ỨNG VIÊN
+                        DOANH NGHIỆP
                     </h5>
                     <br />
                     <div
@@ -71,16 +77,16 @@ class Applicant extends Component {
         );
     }
 
-    getApplicants() {
+    getEnterprises() {
         let data = [];
         var applicants = [];
         var applicant = {};
-        ApplicantService.getApplicants().then((res) => {
+        EnterpriseService.getEnterprises().then((res) => {
             data = res.data;
             data.forEach((e, index) => {
                 applicant = {
                     stt: index + 1,
-                    fullname: e.user.fullname,
+                    name: e.name,
                     phone: e.user.phone,
                     email: e.user.email,
                     edit: <ButtonEdit id={e.id} />,
@@ -95,4 +101,4 @@ class Applicant extends Component {
     }
 }
 
-export default Applicant;
+export default Enterprise;

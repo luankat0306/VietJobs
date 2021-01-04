@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { Alert, Button, Col, Form } from "react-bootstrap";
 import AdminService from "../../services/AdminService";
+import LeftSidebar from "../LeftSidebar";
 
 class Profile extends Component {
     constructor(props) {
@@ -87,86 +88,91 @@ class Profile extends Component {
     };
     render() {
         return (
-            <div>
-                <br />
-                <h5
-                    style={{
-                        borderLeft: "5px solid #242849",
-                        paddingLeft: "10px",
-                        color: "#242849",
-                    }}>
-                    <i>
-                        <FontAwesomeIcon icon={faEdit} />
-                    </i>{" "}
-                    THÔNG TIN CÁ NHÂN
-                </h5>
-                <br />
-                {this.alertUpdate()}
-                <div className="thong-tin">
-                    <div className="img-Admin">
-                        <img
-                            className="avatar"
-                            style={{ width: "200px", height: "200px" }}
-                            src={
-                                process.env.PUBLIC_URL +
-                                "/images/" +
-                                this.state.image
-                            }
-                            alt="avatar"
-                        />
+            <div className="admin-wrapper">
+                <LeftSidebar />
+                <div className="content">
+                    <br />
+                    <h5
+                        style={{
+                            borderLeft: "5px solid #242849",
+                            paddingLeft: "10px",
+                            color: "#242849",
+                        }}>
+                        <i>
+                            <FontAwesomeIcon icon={faEdit} />
+                        </i>{" "}
+                        THÔNG TIN CÁ NHÂN
+                    </h5>
+                    <br />
+                    {this.alertUpdate()}
+                    <div className="thong-tin">
+                        <div className="img-Admin">
+                            <img
+                                className="avatar"
+                                style={{ width: "200px", height: "200px" }}
+                                src={
+                                    process.env.PUBLIC_URL +
+                                    "/images/" +
+                                    this.state.image
+                                }
+                                alt="avatar"
+                            />
+                        </div>
+                        <Form style={{ width: "90%" }}>
+                            <Form.Row>
+                                <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="Enter email"
+                                        value={this.state.email}
+                                        id="email"
+                                        name="email"
+                                        onChange={this.changeEmailHandler}
+                                    />
+                                </Form.Group>
+
+                                <Form.Group
+                                    as={Col}
+                                    controlId="formGridPassword">
+                                    <Form.Label>Username</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Username"
+                                        value={this.state.username}
+                                        onChange={this.changeUsernameHandler}
+                                    />
+                                </Form.Group>
+                            </Form.Row>
+
+                            <Form.Group controlId="formGridAddress1">
+                                <Form.Label>Họ và Tên</Form.Label>
+                                <Form.Control
+                                    placeholder="VD: Nguyễn Văn Thành"
+                                    value={this.state.fullname}
+                                    onChange={this.changeFullNameHandler}
+                                />
+                            </Form.Group>
+
+                            <Form.Group controlId="formGridAddress2">
+                                <Form.Label>Số điện thoại</Form.Label>
+                                <Form.Control
+                                    type="tel"
+                                    pattern="[0-9]{10}"
+                                    placeholder="VD: 09033345859"
+                                    value={this.state.phone}
+                                    onChange={this.changePhoneHandler}
+                                />
+                            </Form.Group>
+
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                onClick={this.updateAdmin}>
+                                Lưu
+                            </Button>
+                        </Form>
                     </div>
-                    <Form style={{ width: "90%" }}>
-                        <Form.Row>
-                            <Form.Group as={Col} controlId="formGridEmail">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    placeholder="Enter email"
-                                    value={this.state.email}
-                                    id="email"
-                                    name="email"
-                                    onInput={this.changeEmailHandler}
-                                />
-                            </Form.Group>
-
-                            <Form.Group as={Col} controlId="formGridPassword">
-                                <Form.Label>Username</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Username"
-                                    value={this.state.username}
-                                    onChange={this.changeUsernameHandler}
-                                />
-                            </Form.Group>
-                        </Form.Row>
-
-                        <Form.Group controlId="formGridAddress1">
-                            <Form.Label>Họ và Tên</Form.Label>
-                            <Form.Control
-                                placeholder="VD: Nguyễn Văn Thành"
-                                value={this.state.fullname}
-                                onChange={this.changeFullNameHandler}
-                            />
-                        </Form.Group>
-
-                        <Form.Group controlId="formGridAddress2">
-                            <Form.Label>Số điện thoại</Form.Label>
-                            <Form.Control
-                                type="tel"
-                                pattern="[0-9]{10}"
-                                placeholder="VD: 09033345859"
-                                value={this.state.phone}
-                                onChange={this.changePhoneHandler}
-                            />
-                        </Form.Group>
-
-                        <Button
-                            variant="primary"
-                            type="submit"
-                            onClick={this.updateAdmin}>
-                            Lưu
-                        </Button>
-                    </Form>
                 </div>
             </div>
         );

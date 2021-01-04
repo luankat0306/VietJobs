@@ -1,7 +1,7 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
-
+import search from "../js/script";
 class SearchBar extends Component {
     render() {
         return (
@@ -9,6 +9,8 @@ class SearchBar extends Component {
                 <form className="form-search">
                     <input
                         className="search-txt"
+                        id="key"
+                        onKeyUp={search}
                         type="text"
                         placeholder="Tìm Kiếm..."
                         required

@@ -1,7 +1,6 @@
 import { faUserTie } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
-import ApplicantService from "../../services/ApplicantService";
 import SearchBar from "../SearchBar";
 import Table from "../Table";
 import ButtonAdd from "./ButtonAdd";
@@ -9,13 +8,14 @@ import ButtonEdit from "./ButtonEdit";
 import ButtonDelete from "./ButtonDelete";
 import { ToastContainer } from "react-toastify";
 import LeftSidebar from "../LeftSidebar";
+import CareerService from "../../services/CareerService";
 
-class Applicant extends Component {
+class Career extends Component {
     constructor(props) {
         super(props);
         this.state = {
             modalShow: false,
-            thead: ["STT", "Họ và tên", "Số điện thoại", "Email", "Chỉnh Sửa"],
+            thead: ["STT", "Ngành Nghề", "Chỉnh Sửa"],
             tbody: [],
         };
     }
@@ -75,14 +75,12 @@ class Applicant extends Component {
         let data = [];
         var applicants = [];
         var applicant = {};
-        ApplicantService.getApplicants().then((res) => {
+        CareerService.getCareers().then((res) => {
             data = res.data;
             data.forEach((e, index) => {
                 applicant = {
                     stt: index + 1,
-                    fullname: e.user.fullname,
-                    phone: e.user.phone,
-                    email: e.user.email,
+                    career: e.career,
                     edit: <ButtonEdit id={e.id} />,
 
                     delete: <ButtonDelete id={e.id} />,
@@ -95,4 +93,4 @@ class Applicant extends Component {
     }
 }
 
-export default Applicant;
+export default Career;

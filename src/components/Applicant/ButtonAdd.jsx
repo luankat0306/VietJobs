@@ -1,9 +1,9 @@
-import { Button, Col, Form, Modal } from "react-bootstrap";
+import { Alert, Button, Col, Form, Modal } from "react-bootstrap";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import ProvinceService from "../../services/ProvinceService";
 import ApplicantService from "../../services/ApplicantService";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function ButtonAdd(props) {
@@ -22,6 +22,7 @@ export default function ButtonAdd(props) {
     const [show, setShow] = useState(false);
     const [provinces, setProvinces] = useState([]);
     const [validated, setValidated] = useState(false);
+    const [error, setError] = useState("");
 
     const changeEmailHandler = (e) => {
         setEmail(e.target.value);
@@ -69,32 +70,45 @@ export default function ButtonAdd(props) {
             event.stopPropagation();
         } else if (form.checkValidity() === true) {
             let applicant = {
-                email: email,
-                username: username,
-                fullname: fullname,
-                phone: phone,
+                user: {
+                    email: email,
+                    username: username,
+                    fullname: fullname,
+                    phone: phone,
+                    password: password,
+                },
                 birthday: birthday,
                 gender: gender,
                 address: address,
                 province: province,
-                password: password,
             };
 
-            ApplicantService.createApplicant(applicant).then(() => {
-                setValidated(false);
-                setShow(false);
-                history.go("/ung-vien");
-                toast("Thêm thành công", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    pauseOnFocusLoss: false,
-                    draggable: true,
-                    progress: undefined,
-                });
-            });
+            ApplicantService.createApplicant(applicant).then(
+                () => {
+                    setValidated(false);
+                    setShow(false);
+                    history.go("/ung-vien");
+                    toast("Thêm thành công", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        pauseOnFocusLoss: false,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                },
+                (error) => {
+                    setError(
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                            error.message ||
+                            error.toString()
+                    );
+                }
+            );
         }
 
         setValidated(true);
@@ -105,7 +119,20 @@ export default function ButtonAdd(props) {
         setShow(false);
     };
 
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setPhone("");
+        setAddress("");
+        setBirthday("");
+        setConfirmPassword("");
+        setPassword("");
+        setEmail("");
+        setError("");
+        setFullname("");
+        setGender("");
+        setProvince("");
+        setUsername("");
+        setShow(true);
+    };
 
     useEffect(() => {
         if (show === true) {
@@ -236,6 +263,7 @@ export default function ButtonAdd(props) {
                                     as="select"
                                     onChange={changeProvinceHandler}
                                     className="mr-sm-2"
+                                    required
                                     custom>
                                     <option value="">Chọn Tỉnh Thành</option>
                                     {provinces.map((province, index) => (
@@ -250,9 +278,7 @@ export default function ButtonAdd(props) {
                         </Form.Row>
 
                         <Form.Row>
-                            <Form.Group
-                                as={Col}
-                                controlId="formGridPasswordPassword">
+                            <Form.Group as={Col} controlId="formGridPassword">
                                 <Form.Label>Mật khẩu</Form.Label>
                                 <Form.Control
                                     type="password"
@@ -269,7 +295,10 @@ export default function ButtonAdd(props) {
                                     type="password"
                                     onChange={changeConfirmPasswordHandler}
                                     required
-                                    formNoValidate
+                                    isValid={
+                                        password === null &&
+                                        password === confirmPassword
+                                    }
                                     isInvalid={password !== confirmPassword}
                                 />
                                 <Form.Control.Feedback type="invalid">
@@ -277,6 +306,9 @@ export default function ButtonAdd(props) {
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Form.Row>
+                        {error !== "" && (
+                            <Alert variant="danger">{error}</Alert>
+                        )}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>

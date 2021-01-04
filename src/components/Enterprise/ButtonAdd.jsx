@@ -1,52 +1,27 @@
 import { Alert, Button, Col, Form, Modal } from "react-bootstrap";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import ProvinceService from "../../services/ProvinceService";
-import ApplicantService from "../../services/ApplicantService";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import EnterpriseService from "../../services/EnterpriseService";
 
-export default function ButtonEdit(props) {
+export default function ButtonAdd(props) {
     let history = useHistory();
-    const [show, setShow] = useState(false);
-    const [provinces, setProvinces] = useState([]);
-    const [validated, setValidated] = useState(false);
-
-    const [idUser, setIdUser] = useState("");
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [fullname, setFullname] = useState("");
     const [phone, setPhone] = useState("");
-    const [birthday, setBirthday] = useState("");
-    const [gender, setGender] = useState("");
-    const [province, setProvince] = useState("");
+    const [contact, setContact] = useState("");
+    const [website, setWebsite] = useState("");
+    const [description, setDescription] = useState("");
+    const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    const [show, setShow] = useState(false);
+    const [validated, setValidated] = useState(false);
     const [error, setError] = useState("");
-
-    useEffect(() => {
-        if (show === true) {
-            ApplicantService.getApplicant(props.id).then((res) => {
-                let applicant = res.data;
-                setIdUser(applicant.user.id);
-                setEmail(applicant.user.email);
-                setUsername(applicant.user.username);
-                setFullname(applicant.user.fullname);
-                setPhone(applicant.user.phone);
-                setBirthday(applicant.birthday);
-                setGender(applicant.gender);
-                setAddress(applicant.address);
-                setProvince(applicant.province);
-            });
-
-            ProvinceService.listProvince().then((res) =>
-                setProvinces(res.data)
-            );
-        }
-    }, [props.id, show]);
 
     const changeEmailHandler = (e) => {
         setEmail(e.target.value);
@@ -63,20 +38,24 @@ export default function ButtonEdit(props) {
     const changePhoneHandler = (e) => {
         setPhone(e.target.value);
     };
-    const changeBirthDayHandler = (e) => {
-        setBirthday(e.target.value);
+    const changeContactHandler = (e) => {
+        setContact(e.target.value);
     };
 
-    const changeGenderHandler = (e) => {
-        setGender(e.target.value);
+    const changeWebsiteHandler = (e) => {
+        setWebsite(e.target.value);
     };
 
     const changeAddressHandler = (e) => {
         setAddress(e.target.value);
     };
 
-    const changeProvinceHandler = (e) => {
-        setProvince(e.target.value);
+    const changeDescriptionHandler = (e) => {
+        setDescription(e.target.value);
+    };
+
+    const changeNameHandler = (e) => {
+        setDescription(e.target.value);
     };
 
     const changePasswordHandler = (e) => {
@@ -90,31 +69,30 @@ export default function ButtonEdit(props) {
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
-        if (form.checkValidity() === false) {
+        if (form.checkValidity() === false || password !== confirmPassword) {
             event.stopPropagation();
         } else if (form.checkValidity() === true) {
-            let applicant = {
+            let enterprise = {
                 user: {
-                    id: idUser,
                     email: email,
                     username: username,
                     fullname: fullname,
                     phone: phone,
                     password: password,
                 },
-                birthday: birthday,
-                gender: gender,
+                contact: contact,
+                website: website,
                 address: address,
-                province: province,
+                description: description,
+                name: name,
             };
 
-            ApplicantService.updateApplicant(props.id, applicant).then(
+            EnterpriseService.createEnterprise(enterprise).then(
                 () => {
                     setValidated(false);
                     setShow(false);
-                    history.go("/ung-vien");
-
-                    toast("Sửa thành công", {
+                    history.go("/doanh-nghiep");
+                    toast("Thêm thành công", {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: true,
@@ -148,14 +126,15 @@ export default function ButtonEdit(props) {
     const handleShow = () => {
         setPhone("");
         setAddress("");
-        setBirthday("");
+        setContact("");
         setConfirmPassword("");
         setPassword("");
         setEmail("");
         setError("");
         setFullname("");
-        setGender("");
-        setProvince("");
+        setWebsite("");
+        setName("");
+        setDescription("");
         setUsername("");
         setShow(true);
     };
@@ -163,40 +142,39 @@ export default function ButtonEdit(props) {
     return (
         <>
             <Button
+                style={{
+                    backgroundColor: "#242849",
+                    color: "#ffd98d",
+                    fontWeight: "bold",
+                }}
                 variant="white"
                 className="edit"
-                onClick={handleShow}
-                onChange={changeEmailHandler}>
-                <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
+                onClick={handleShow}>
+                Thêm Người Tìm Việc
             </Button>
 
             <Modal show={show} onHide={handleClose}>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Chỉnh sửa thông tin</Modal.Title>
+                        <Modal.Title>Điền vào thông tin</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form.Row>
-                            <Form.Group as={Col} controlId="eformGridEmail">
+                            <Form.Group as={Col} controlId="formGridEmail">
                                 <Form.Label>Email</Form.Label>
                                 <Form.Control
                                     type="email"
                                     placeholder="Enter email"
-                                    id="email"
-                                    name="email"
-                                    value={email}
                                     onChange={changeEmailHandler}
                                     required
                                 />
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="eformGridUsername">
+                            <Form.Group as={Col} controlId="formGridUsername">
                                 <Form.Label>Username</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Username"
-                                    name="username"
-                                    value={username}
                                     onChange={changeUsernameHandler}
                                     required
                                 />
@@ -204,26 +182,22 @@ export default function ButtonEdit(props) {
                         </Form.Row>
 
                         <Form.Row>
-                            <Form.Group as={Col} controlId="eformGridFullName">
+                            <Form.Group as={Col} controlId="formGridFullName">
                                 <Form.Label>Họ và Tên</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="VD: Nguyễn Văn Thành"
-                                    name="fullname"
-                                    value={fullname}
                                     onChange={changeFullnameHandler}
                                     required
                                 />
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="eformGridPhone">
+                            <Form.Group as={Col} controlId="formGridPhone">
                                 <Form.Label>Số điện thoại</Form.Label>
                                 <Form.Control
                                     type="tel"
                                     pattern="[0-9]{10}"
                                     placeholder="VD: 09033345859"
-                                    name="phone"
-                                    value={phone}
                                     onChange={changePhoneHandler}
                                     required
                                 />
@@ -231,91 +205,62 @@ export default function ButtonEdit(props) {
                         </Form.Row>
 
                         <Form.Row>
-                            <Form.Group as={Col} controlId="eformGridBirthday">
-                                <Form.Label>Ngày Sinh</Form.Label>
+                            <Form.Group as={Col} controlId="formGridContact">
+                                <Form.Label>Người Liên Hệ</Form.Label>
                                 <Form.Control
-                                    type="date"
-                                    name="birthday"
-                                    value={birthday}
-                                    onChange={changeBirthDayHandler}
+                                    type="text"
+                                    onChange={changeContactHandler}
                                     required
                                 />
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="eformGridGender">
-                                <Form.Label>Giới Tính</Form.Label>
-                                <Form.Row>
-                                    <Form.Check
-                                        type="radio"
-                                        className="my-1 mr-sm-2"
-                                        id="nam"
-                                        name="gender"
-                                        label="Nam"
-                                        value="Nam"
-                                        onChange={changeGenderHandler}
-                                        custom
-                                        defaultChecked
-                                        checked={gender === "Nam"}
-                                    />
-                                    <Form.Check
-                                        type="radio"
-                                        className="my-1 mr-sm-2"
-                                        id="nu"
-                                        name="gender"
-                                        label="Nữ"
-                                        value="Nữ"
-                                        onChange={changeGenderHandler}
-                                        custom
-                                        required
-                                        checked={gender !== "Nam"}
-                                    />
-                                </Form.Row>
+                            <Form.Group as={Col} controlId="formGridWebsite">
+                                <Form.Label>Website</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    onChange={changeWebsiteHandler}
+                                    required
+                                />
                             </Form.Group>
                         </Form.Row>
 
                         <Form.Row>
-                            <Form.Group as={Col} controlId="eformGridAddress">
+                            <Form.Group as={Col} controlId="formGridAddress">
                                 <Form.Label>Địa Chỉ</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    name="address"
-                                    value={address}
                                     onChange={changeAddressHandler}
                                     placeholder="VD: 123/2 Hòa Hưng, Phường 13, Quận 10"
                                     required
                                 />
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="eformGridProvince">
-                                <Form.Label>Tỉnh Thành</Form.Label>
+                            <Form.Group as={Col} controlId="formGridName">
+                                <Form.Label>Tên Công Ty</Form.Label>
                                 <Form.Control
-                                    as="select"
-                                    name="province"
+                                    type="text"
+                                    onChange={changeNameHandler}
                                     className="mr-sm-2"
-                                    onChange={changeProvinceHandler}
-                                    custom>
-                                    {
-                                        <option value={province}>
-                                            {province}
-                                        </option>
-                                    }
-                                    {provinces.map((province, index) => (
-                                        <option
-                                            value={province.province}
-                                            key={index}>
-                                            {province.province}
-                                        </option>
-                                    ))}
-                                </Form.Control>
+                                    required
+                                />
                             </Form.Group>
                         </Form.Row>
 
+                        <Form.Group controlId="formGridDescription">
+                            <Form.Label>Mô Tả</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                onChange={changeDescriptionHandler}
+                                className="mr-sm-2"
+                                required
+                            />
+                        </Form.Group>
+
                         <Form.Row>
-                            <Form.Group as={Col} controlId="eformGridPassword">
+                            <Form.Group as={Col} controlId="formGridPassword">
                                 <Form.Label>Mật khẩu</Form.Label>
                                 <Form.Control
                                     type="password"
-                                    name="password"
                                     onChange={changePasswordHandler}
                                     required
                                 />
@@ -323,7 +268,7 @@ export default function ButtonEdit(props) {
 
                             <Form.Group
                                 as={Col}
-                                controlId="eformGridCheckPassword">
+                                controlId="formGridCheckPassword">
                                 <Form.Label>Nhập lại mật khẩu</Form.Label>
                                 <Form.Control
                                     type="password"
