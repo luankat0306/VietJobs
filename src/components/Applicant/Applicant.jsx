@@ -1,8 +1,7 @@
-import { faUserTie } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faUserTie } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import ApplicantService from "../../services/ApplicantService";
-import SearchBar from "../SearchBar";
 import Table from "../Table";
 import ButtonAdd from "./ButtonAdd";
 import ButtonEdit from "./ButtonEdit";
@@ -18,9 +17,39 @@ class Applicant extends Component {
             thead: ["STT", "Họ và tên", "Số điện thoại", "Email", "Chỉnh Sửa"],
             tbody: [],
         };
+        this.search = this.search.bind(this);
     }
     componentDidMount() {
         this.getApplicants();
+    }
+
+    search(e) {
+        let data = [];
+        var applicants = [];
+        var applicant = {};
+        const keyword = e.target.value;
+        if (keyword === "") {
+            this.getApplicants();
+        } else {
+            console.log(keyword);
+            ApplicantService.searchApplicant(keyword).then((res) => {
+                data = res.data;
+                data.forEach((e, index) => {
+                    applicant = {
+                        stt: index + 1,
+                        fullname: e.user.fullname,
+                        phone: e.user.phone,
+                        email: e.user.email,
+                        edit: <ButtonEdit id={e.id} />,
+
+                        delete: <ButtonDelete id={e.id} />,
+                    };
+                    applicants.push(applicant);
+                });
+
+                this.setState({ tbody: applicants });
+            });
+        }
     }
 
     render() {
@@ -44,7 +73,19 @@ class Applicant extends Component {
                             display: "flex",
                             justifyContent: "space-between",
                         }}>
-                        <SearchBar />
+                        <div className="search">
+                            <form className="form-search">
+                                <input
+                                    className="search-txt"
+                                    onChange={this.search}
+                                    type="text"
+                                    placeholder="Tìm Kiếm..."
+                                />
+                                <button className="search-btn" type="submit">
+                                    <FontAwesomeIcon icon={faSearch} />
+                                </button>
+                            </form>
+                        </div>
                         <ButtonAdd />
                     </div>
                     <hr />
@@ -54,6 +95,7 @@ class Applicant extends Component {
                         isEdit={true}
                         headBackground={"#242849"}
                         headColor={"#ffd98d"}
+                        page={true}
                     />
                     <footer
                         style={{

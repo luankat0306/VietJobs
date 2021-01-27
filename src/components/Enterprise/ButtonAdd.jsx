@@ -153,7 +153,7 @@ export default function ButtonAdd(props) {
                 Thêm Doanh Nghiệp
             </Button>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal size="lg" show={show} onHide={handleClose}>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Modal.Header closeButton>
                         <Modal.Title>Điền vào thông tin</Modal.Title>

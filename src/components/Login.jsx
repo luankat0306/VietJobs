@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Form } from "react-bootstrap";
+import { Alert, Form } from "react-bootstrap";
 import "../css/LoginPage.css";
 import AuthService from "../services/AuthService";
+import history from "../history";
 
 export default class Login extends Component {
     constructor(props) {
@@ -9,7 +10,7 @@ export default class Login extends Component {
         this.state = {
             username: "",
             password: "",
-            message: "",
+            error: "",
         };
         this.login = this.login.bind(this);
         this.handleUsername = this.handleUsername.bind(this);
@@ -18,7 +19,24 @@ export default class Login extends Component {
 
     login(e) {
         e.preventDefault();
-        AuthService.login(this.state.username, this.state.password);
+        AuthService.login(this.state.username, this.state.password).then(
+            (res) => {
+                if (res.data.accessToken)
+                    localStorage.setItem("user", JSON.stringify(res.data));
+                history.push("/thong-ke");
+                window.location.reload();
+            },
+            (error) => {
+                this.setState({
+                    error:
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString(),
+                });
+            }
+        );
     }
 
     handleUsername(e) {
@@ -30,6 +48,7 @@ export default class Login extends Component {
     }
 
     render() {
+        const error = this.state.error;
         return (
             <div className="login-page">
                 <div className="formLogin">
@@ -57,7 +76,9 @@ export default class Login extends Component {
                             />
                             <label for="password">Password</label>
                         </div>
-
+                        {error !== "" && (
+                            <Alert variant="danger">{error}</Alert>
+                        )}
                         <button name="submit">Login</button>
                     </Form>
                 </div>

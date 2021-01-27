@@ -22,5 +22,9 @@ class CareerService {
     deleteCareer(id) {
         return Axios.delete(API_URL + "/" + id, authHeader());
     }
+
+    search(keyword) {
+        return Axios.get(API_URL + "/search/" + keyword, authHeader());
+    }
 }
 export default new CareerService();

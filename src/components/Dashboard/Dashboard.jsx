@@ -111,6 +111,7 @@ export default class Dashboard extends Component {
                                 body={this.state.bodyEnterprises}
                                 headBackground={"#89a8bc"}
                                 headColor={"white"}
+                                page={false}
                             />
                         </div>
                         <div className="table2">
@@ -119,6 +120,7 @@ export default class Dashboard extends Component {
                                 body={this.state.bodyJobs}
                                 headBackground={"#7a80b4"}
                                 headColor={"white"}
+                                page={false}
                             />
                         </div>
                         <ChartPie />

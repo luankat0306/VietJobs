@@ -23,8 +23,6 @@ export default function ButtonEdit(props) {
     const [gender, setGender] = useState("");
     const [province, setProvince] = useState("");
     const [address, setAddress] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
 
     useEffect(() => {
@@ -79,14 +77,6 @@ export default function ButtonEdit(props) {
         setProvince(e.target.value);
     };
 
-    const changePasswordHandler = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const changeConfirmPasswordHandler = (e) => {
-        setConfirmPassword(e.target.value);
-    };
-
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
@@ -100,7 +90,6 @@ export default function ButtonEdit(props) {
                     username: username,
                     fullname: fullname,
                     phone: phone,
-                    password: password,
                 },
                 birthday: birthday,
                 gender: gender,
@@ -149,8 +138,6 @@ export default function ButtonEdit(props) {
         setPhone("");
         setAddress("");
         setBirthday("");
-        setConfirmPassword("");
-        setPassword("");
         setEmail("");
         setError("");
         setFullname("");
@@ -293,11 +280,8 @@ export default function ButtonEdit(props) {
                                     name="province"
                                     className="mr-sm-2"
                                     onChange={changeProvinceHandler}
+                                    value={province}
                                     custom>
-                                    {
-                                        <option value={province}>
-                                            {province}
-                                        </option>
                                     }
                                     {provinces.map((province, index) => (
                                         <option
@@ -310,36 +294,6 @@ export default function ButtonEdit(props) {
                             </Form.Group>
                         </Form.Row>
 
-                        <Form.Row>
-                            <Form.Group as={Col} controlId="eformGridPassword">
-                                <Form.Label>Mật khẩu</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    name="password"
-                                    onChange={changePasswordHandler}
-                                    required
-                                />
-                            </Form.Group>
-
-                            <Form.Group
-                                as={Col}
-                                controlId="eformGridCheckPassword">
-                                <Form.Label>Nhập lại mật khẩu</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    onChange={changeConfirmPasswordHandler}
-                                    required
-                                    isValid={
-                                        password === null &&
-                                        password === confirmPassword
-                                    }
-                                    isInvalid={password !== confirmPassword}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Mật khẩu không trùng khớp
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Form.Row>
                         {error !== "" && (
                             <Alert variant="danger">{error}</Alert>
                         )}

@@ -7,7 +7,7 @@ class ApplicantService {
     }
 
     createApplicant(applicant) {
-        return Axios.post(API_URL, applicant, authHeader());
+        return Axios.post(API_URL + "/signup", applicant, authHeader());
     }
 
     getApplicant(id) {
@@ -24,6 +24,10 @@ class ApplicantService {
 
     countApplicant() {
         return Axios.get(API_URL + "/count", authHeader());
+    }
+
+    searchApplicant(keyword) {
+        return Axios.get(API_URL + "/search/" + keyword, authHeader());
     }
 }
 

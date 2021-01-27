@@ -62,7 +62,7 @@ class Table extends Component {
         }
 
         const renderPageNumbers = () => {
-            if (pageNumbers.length > 1) {
+            if (pageNumbers.length >= 1) {
                 return (
                     <div
                         style={{
@@ -103,7 +103,7 @@ class Table extends Component {
                         <Render bodys={currentApplicants} />
                     </tbody>
                 </table>
-                {renderPageNumbers()}
+                {this.props.page === true && renderPageNumbers()}
             </div>
         );
     }

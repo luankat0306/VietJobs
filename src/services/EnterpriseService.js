@@ -13,7 +13,7 @@ class EnterpriseService {
     }
 
     createEnterprise(enterprise) {
-        return Axios.post(API_URL, enterprise, authHeader());
+        return Axios.post(API_URL + "/signup", enterprise, authHeader());
     }
 
     updateEnterprise(id, enterprise) {
@@ -30,6 +30,9 @@ class EnterpriseService {
 
     topFiveEnterprises() {
         return Axios.get(API_URL + "/chart/top-five-enterprises", authHeader());
+    }
+    search(keyword) {
+        return Axios.get(API_URL + "/search/" + keyword, authHeader());
     }
 }
 

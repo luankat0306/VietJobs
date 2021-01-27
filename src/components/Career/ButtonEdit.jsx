@@ -20,7 +20,7 @@ export default function ButtonEdit(props) {
         if (show === true) {
             CareerService.getCareer(props.id).then((res) => {
                 let newCareer = res.data;
-                setCareer(newCareer.career);
+                setCareer(newCareer.name);
             });
         }
     }, [props.id, show]);

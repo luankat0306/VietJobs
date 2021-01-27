@@ -6,6 +6,8 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import EnterpriseService from "../../services/EnterpriseService";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export default function ButtonEdit(props) {
     let history = useHistory();
@@ -19,8 +21,6 @@ export default function ButtonEdit(props) {
     const [description, setDescription] = useState("");
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
 
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
@@ -79,18 +79,10 @@ export default function ButtonEdit(props) {
         setName(e.target.value);
     };
 
-    const changePasswordHandler = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const changeConfirmPasswordHandler = (e) => {
-        setConfirmPassword(e.target.value);
-    };
-
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
-        if (form.checkValidity() === false || password !== confirmPassword) {
+        if (form.checkValidity() === false) {
             event.stopPropagation();
         } else if (form.checkValidity() === true) {
             let enterprise = {
@@ -100,7 +92,6 @@ export default function ButtonEdit(props) {
                     username: username,
                     fullname: fullname,
                     phone: phone,
-                    password: password,
                 },
                 contact: contact,
                 website: website,
@@ -149,8 +140,6 @@ export default function ButtonEdit(props) {
         setPhone("");
         setAddress("");
         setContact("");
-        setConfirmPassword("");
-        setPassword("");
         setEmail("");
         setError("");
         setFullname("");
@@ -171,7 +160,7 @@ export default function ButtonEdit(props) {
                 <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
             </Button>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal size="lg" show={show} onHide={handleClose}>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Modal.Header closeButton>
                         <Modal.Title>Chỉnh sửa thông tin</Modal.Title>
@@ -217,7 +206,7 @@ export default function ButtonEdit(props) {
                                 <Form.Label>Số điện thoại</Form.Label>
                                 <Form.Control
                                     type="tel"
-                                    pattern="[0-9]{10}"
+                                    pattern="[0-9]{8-11}"
                                     placeholder="VD: 09033345859"
                                     value={phone}
                                     onChange={changePhoneHandler}
@@ -274,44 +263,33 @@ export default function ButtonEdit(props) {
 
                         <Form.Group controlId="formGridDescription">
                             <Form.Label>Mô Tả</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                value={description}
-                                onChange={changeDescriptionHandler}
-                                className="mr-sm-2"
-                                required
+                            <CKEditor
+                                editor={ClassicEditor}
+                                data={
+                                    description !== ""
+                                        ? description
+                                        : "<p>Mô tả công việc tại đây</p>"
+                                }
+                                onReady={(editor) => {
+                                    // You can store the "editor" and use when it is needed.
+                                    console.log(
+                                        "Editor is ready to use!",
+                                        editor
+                                    );
+                                }}
+                                onChange={(event, editor) => {
+                                    setDescription(editor.getData());
+                                    console.log({ event, editor, description });
+                                }}
+                                onBlur={(event, editor) => {
+                                    console.log("Blur.", editor);
+                                }}
+                                onFocus={(event, editor) => {
+                                    console.log("Focus.", editor);
+                                }}
                             />
                         </Form.Group>
 
-                        <Form.Row>
-                            <Form.Group as={Col} controlId="formGridPassword">
-                                <Form.Label>Mật khẩu</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    onChange={changePasswordHandler}
-                                    required
-                                />
-                            </Form.Group>
-
-                            <Form.Group
-                                as={Col}
-                                controlId="formGridCheckPassword">
-                                <Form.Label>Nhập lại mật khẩu</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    onChange={changeConfirmPasswordHandler}
-                                    required
-                                    isValid={
-                                        password === null &&
-                                        password === confirmPassword
-                                    }
-                                    isInvalid={password !== confirmPassword}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Mật khẩu không trùng khớp
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Form.Row>
                         {error !== "" && (
                             <Alert variant="danger">{error}</Alert>
                         )}

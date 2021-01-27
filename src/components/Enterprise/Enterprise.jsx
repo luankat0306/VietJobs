@@ -1,4 +1,4 @@
-import { faLandmark } from "@fortawesome/free-solid-svg-icons";
+import { faLandmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import SearchBar from "../SearchBar";
@@ -24,9 +24,37 @@ class Enterprise extends Component {
             ],
             tbody: [],
         };
+        this.search = this.search.bind(this);
     }
     componentDidMount() {
         this.getEnterprises();
+    }
+
+    search(e) {
+        let data = [];
+        var applicants = [];
+        var applicant = {};
+        if (e.target.value === "") {
+            this.getEnterprises();
+        } else {
+            EnterpriseService.search(e.target.value).then((res) => {
+                data = res.data;
+                data.forEach((e, index) => {
+                    applicant = {
+                        stt: index + 1,
+                        name: e.name,
+                        phone: e.user.phone,
+                        email: e.user.email,
+                        edit: <ButtonEdit id={e.id} />,
+
+                        delete: <ButtonDelete id={e.id} />,
+                    };
+                    applicants.push(applicant);
+                });
+
+                this.setState({ tbody: applicants });
+            });
+        }
     }
 
     render() {
@@ -49,7 +77,19 @@ class Enterprise extends Component {
                             display: "flex",
                             justifyContent: "space-between",
                         }}>
-                        <SearchBar />
+                        <div className="search">
+                            <form className="form-search">
+                                <input
+                                    className="search-txt"
+                                    onChange={this.search}
+                                    type="text"
+                                    placeholder="Tìm Kiếm..."
+                                />
+                                <button className="search-btn" type="submit">
+                                    <FontAwesomeIcon icon={faSearch} />
+                                </button>
+                            </form>
+                        </div>
                         <ButtonAdd />
                     </div>
                     <hr />
@@ -59,6 +99,7 @@ class Enterprise extends Component {
                         isEdit={true}
                         headBackground={"#242849"}
                         headColor={"#ffd98d"}
+                        page={true}
                     />
                     <footer
                         style={{

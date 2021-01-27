@@ -9,10 +9,24 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import AdminService from "../services/AdminService";
 import AuthService from "../services/AuthService";
+import FileService from "../services/FileService";
 export default class LeftSidebar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            admin: {},
+        };
+    }
     logout() {
         AuthService.logout();
+    }
+    componentDidMount() {
+        const id = AuthService.getCurrentUser().id;
+        AdminService.getAdmin(id).then((res) =>
+            this.setState({ admin: res.data })
+        );
     }
     render() {
         return (
@@ -21,7 +35,9 @@ export default class LeftSidebar extends Component {
                     <div className="img-Admin">
                         <img
                             className="avatar"
-                            src={process.env.PUBLIC_URL + "/images/avatar.png"}
+                            src={FileService.downloadFile(
+                                this.state.admin.image
+                            )}
                             alt="avatar"
                         />
                         <a href="/login" onClick={this.logout}>
