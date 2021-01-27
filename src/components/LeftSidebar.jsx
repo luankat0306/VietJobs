@@ -83,14 +83,6 @@ export default class LeftSidebar extends Component {
                             Ngành nghề
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink className="nav-link" to="/ho-tro">
-                            <i>
-                                <FontAwesomeIcon icon={faHeadset} />
-                            </i>
-                            Hỗ trợ trực tuyến
-                        </NavLink>
-                    </li>
                 </ul>
             </div>
         );

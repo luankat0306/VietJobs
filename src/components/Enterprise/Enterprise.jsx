@@ -1,4 +1,4 @@
-import { faUserTie } from "@fortawesome/free-solid-svg-icons";
+import { faLandmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import SearchBar from "../SearchBar";
@@ -41,8 +41,7 @@ class Enterprise extends Component {
                             paddingLeft: "10px",
                             color: "#242849",
                         }}>
-                        <FontAwesomeIcon icon={faUserTie} />
-                        DOANH NGHIỆP
+                        <FontAwesomeIcon icon={faLandmark} /> DOANH NGHIỆP
                     </h5>
                     <br />
                     <div

@@ -5,6 +5,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import ApplicantService from "../../services/ApplicantService";
+import CareerService from "../../services/CareerService";
 
 export default function ButtonDelete(props) {
     let history = useHistory();
@@ -15,7 +16,7 @@ export default function ButtonDelete(props) {
 
     const onDelete = (e) => {
         e.preventDefault();
-        ApplicantService.deleteApplicant(props.id).then(() => {
+        CareerService.deleteCareer(props.id).then(() => {
             setShow(false);
             history.go("/ung-vien");
 

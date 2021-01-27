@@ -1,4 +1,4 @@
-import { faUserTie } from "@fortawesome/free-solid-svg-icons";
+import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import SearchBar from "../SearchBar";
@@ -35,8 +35,8 @@ class Career extends Component {
                             paddingLeft: "10px",
                             color: "#242849",
                         }}>
-                        <FontAwesomeIcon icon={faUserTie} />
-                        ỨNG VIÊN
+                        <FontAwesomeIcon icon={faBriefcase} />
+                        Ngành Nghề
                     </h5>
                     <br />
                     <div

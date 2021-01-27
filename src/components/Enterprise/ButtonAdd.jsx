@@ -150,7 +150,7 @@ export default function ButtonAdd(props) {
                 variant="white"
                 className="edit"
                 onClick={handleShow}>
-                Thêm Người Tìm Việc
+                Thêm Doanh Nghiệp
             </Button>
 
             <Modal show={show} onHide={handleClose}>
